@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
         card.innerHTML = 
             `<div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="images/front.webp" alt="front" style="width:100px;height:100px;"/>
+                    <img src="images/front.webp" alt="front" style="width:150px;height:150px;"/>
                 </div>
                 <div class="flip-card-back">
-                    <img src="images/${images[i]}" alt="back" style="width:100px;height:100px;"/>
+                    <img src="images/${images[i]}" alt="back" style="width:150px;height:150px;"/>
                 </div>
             </div>`;
 
@@ -44,11 +44,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     flippedCards = [];
                 }, 1000);
             } else {
+                flippedCards[0].dataset.solved = 'true';
+                flippedCards[1].dataset.solved = 'true';
                 flippedCards = [];
             }
         }
 
-        if(cards.every(card => card.classList.contains('flip-card-flipped'))) {
+        if(cards.every(card => card.dataset.solved === 'true')) {
             setTimeout(() => alert('Congratulations! You won!'), 500);
         }
     }

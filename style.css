@@ -1,14 +1,14 @@
 #game-board {
     display: flex;
     flex-wrap: wrap;
-    width: 300px;
+    width: 500px;
     margin: auto;
 }
 
 .flip-card {
     background-color: transparent;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     perspective: 1000px;
   }
   
