@@ -67,10 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
       "numOfCardPairs"
     ).innerHTML = `Number of card pairs: ${gameLevelDetails.numOfCardPairs}`;
 
-    document.getElementById(
-      "secondsToDoAll"
-    ).innerHTML = `Seconds to do all: ${gameLevelDetails.secondsToDoAll}`;
-
     gameBoard.innerHTML = "";
     cards = [];
 
