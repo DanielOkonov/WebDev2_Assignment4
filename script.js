@@ -1,17 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   let images = [
-    "6.png",
-    "6.png",
-    "9.png",
-    "9.png",
-    "12.png",
-    "12.png",
-    "15.png",
-    "15.png",
-    "17.png",
-    "17.png",
+    "6.png",   
+    "9.png",    
+    "12.png",    
+    "15.png",    
+    "17.png",    
     "18.png",
-    "18.png",
+    "22.png",
+    "24.png",
+    "31.png",
+    "34.png",
+    "38.png",
+    "42.png",
+    "49.png",
+    "59.png",
   ];
   let cards = [];
   let flippedCards = [];
@@ -82,8 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
       cardSize * gameLevelDetails.numOfColumns + 10
     }px`;
 
-    const selectedImages = images.slice(0, gameLevelDetails.numOfCardPairs * 2);
-    selectedImages.sort(() => 0.5 - Math.random());
+    images.sort(() => 0.5 - Math.random());
+    const selectedImages = images.slice(0, gameLevelDetails.numOfCardPairs);
+    const imagesToAdd = [];
+    selectedImages.forEach(si => {
+      imagesToAdd.push(si);
+      imagesToAdd.push(si);
+    })
+    imagesToAdd.sort(() => 0.5 - Math.random());
 
     for (let i = 0; i < gameLevelDetails.numOfCardPairs * 2; i++) {
       const card = document.createElement("div");
@@ -93,12 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img src="images/front.webp" alt="front" style="width:${cardSize}px;height:${cardSize}px;"/>
                 </div>
                 <div class="flip-card-back">
-                    <img src="images/${selectedImages[i]}" alt="back" style="width:${cardSize}px;height:${cardSize}px;"/>
+                    <img src="images/${imagesToAdd[i]}" alt="back" style="width:${cardSize}px;height:${cardSize}px;"/>
                 </div>
             </div>`;
 
       card.className = "flip-card";
-      card.dataset.image = selectedImages[i];
+      card.dataset.image = imagesToAdd[i];
       card.addEventListener("click", flipCard);
       gameBoard.appendChild(card);
       cards.push(card);
