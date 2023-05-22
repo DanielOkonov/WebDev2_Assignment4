@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Flip Flop</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <div id="game-board">        
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="left">
+        <div id="level">
+          <p>Please select level:</p>
+            <input type="radio" id="easy" name="level" value="easy" checked/>  
+          <label for="easy">Easy</label><br />
+            <input type="radio" id="medium" name="level" value="medium" />  
+          <label for="medium">Medium</label><br />
+            <input type="radio" id="hard" name="level" value="hard" />  
+          <label for="hard">Hard</label><br />
+        </div>
+        <br/>
+        <div>
+            <button id="start">Start</button>
+        </div>
+        <br/>
+        <div>
+            <button id="reset">Reset</button>
+        </div>
+      </div>
+      <div id="right">
+        <div id="game-board"></div>
+      </div>
     </div>
+
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
