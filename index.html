@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Flip Flop</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <div id="left">
-        <div id="level">
-          <p>Please select level:</p>
-            <input type="radio" id="easy" name="level" value="easy" checked/>  
-          <label for="easy">Easy</label><br />
-            <input type="radio" id="medium" name="level" value="medium" />  
-          <label for="medium">Medium</label><br />
-            <input type="radio" id="hard" name="level" value="hard" />  
-          <label for="hard">Hard</label><br />
-        </div>
-        <br/>
-        <div>
-            <button id="start">Start</button>
-        </div>
-        <br/>
-        <div>
-            <button id="reset">Reset</button>
-        </div>
+
+<head>
+  <title>Flip Flop</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="left">
+      <div>
+        <h4>Game Status</h4>
+        <H3 id="gameOn" style="visibility: hidden;">Game On</h3>
+        <p id="numOfCardPairs">Number of card pairs: 0</p>
+        <p id="numOfCardPairsDone">Number of card pairs done: 0</p>
+        <p id="numOfCllcks">Number of clicks: 0</p>
+        <p id="secondsToDoAll">Seconds to do all: 0</p>
+        <p id="secondsRemaining">Seconds remaining: 0</p>
       </div>
-      <div id="right">
-        <div id="game-board"></div>
+      <br />
+      <div id="level">
+        <p>Please select level:</p>
+          <input type="radio" id="easy" name="level" value="easy" checked />  
+        <label for="easy">Easy</label><br />
+          <input type="radio" id="medium" name="level" value="medium" />  
+        <label for="medium">Medium</label><br />
+          <input type="radio" id="hard" name="level" value="hard" />  
+        <label for="hard">Hard</label><br />
+      </div>
+      <br />
+      <div>
+        <button id="start">Start</button>
+      </div>
+      <br />
+      <div>
+        <button id="reset">Reset</button>
       </div>
     </div>
+    <div id="right">
+      <div id="game-board"></div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
+
 </html>

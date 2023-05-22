@@ -1,8 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let images = ["6.png", "6.png", "9.png", "9.png", "12.png", "12.png", "15.png", "15.png", "17.png", "17.png", "18.png", "18.png"];
+  let images = [
+    "6.png",
+    "6.png",
+    "9.png",
+    "9.png",
+    "12.png",
+    "12.png",
+    "15.png",
+    "15.png",
+    "17.png",
+    "17.png",
+    "18.png",
+    "18.png",
+  ];
   let cards = [];
   let flippedCards = [];
   let gameBoardClicksDisabled = true;
+
+  const gameLevelDetails = {
+    numOfCardPairs: 0,
+    numOfColumns: 0,
+    secondsToDoAll: 0,
+  };
+  const gameStatus = {
+    gameOn: false,
+    numOfCardPairsDone: 0,
+    secondsRemaining: 0,
+  };
 
   const gameBoard = document.getElementById("game-board");
   const levelSelect = document.getElementById("level");
@@ -19,36 +43,53 @@ document.addEventListener("DOMContentLoaded", function () {
     const level = document.querySelector('input[name="level"]:checked').value;
     console.log("level: " + level);
 
-    let numOfCards = 0;
-    let numOfColumns = 0;
     switch (level) {
       case "easy":
-        numOfCards = 6;
-        numOfColumns = 3;
+        gameLevelDetails.numOfCardPairs = 3;
+        gameLevelDetails.numOfColumns = 3;
+        gameLevelDetails.secondsToDoAll = 30;
         break;
       case "medium":
-        numOfCards = 8;
-        numOfColumns = 4;
+        gameLevelDetails.numOfCardPairs = 4;
+        gameLevelDetails.numOfColumns = 4;
+        gameLevelDetails.secondsToDoAll = 60;
         break;
       case "hard":
-        numOfCards = 12;
-        numOfColumns = 4;
+        gameLevelDetails.numOfCardPairs = 6;
+        gameLevelDetails.numOfColumns = 4;
+        gameLevelDetails.secondsToDoAll = 90;
         break;
       default:
         console.error("unknown level: " + level);
     }
 
+    document.getElementById(
+      "numOfCardPairs"
+    ).innerHTML = `Number of card pairs: ${gameLevelDetails.numOfCardPairs}`;
+
+    document.getElementById(
+      "secondsToDoAll"
+    ).innerHTML = `Seconds to do all: ${gameLevelDetails.secondsToDoAll}`;
+
     gameBoard.innerHTML = "";
     cards = [];
 
+    gameStatus.gameOn = false;
+    gameStatus.numOfCardPairsDone = 0;
+    gameStatus.secondsRemaining = gameLevelDetails.secondsToDoAll;
+
+    updateGameStatus();
+
     const cardSize = 150;
 
-    gameBoard.style.width = `${cardSize * numOfColumns + 10}px`;
+    gameBoard.style.width = `${
+      cardSize * gameLevelDetails.numOfColumns + 10
+    }px`;
 
-    const selectedImages = images.slice(0, numOfCards);
+    const selectedImages = images.slice(0, gameLevelDetails.numOfCardPairs * 2);
     selectedImages.sort(() => 0.5 - Math.random());
 
-    for (let i = 0; i < numOfCards; i++) {
+    for (let i = 0; i < gameLevelDetails.numOfCardPairs * 2; i++) {
       const card = document.createElement("div");
 
       card.innerHTML = `<div class="flip-card-inner">
@@ -71,14 +112,18 @@ document.addEventListener("DOMContentLoaded", function () {
   function start() {
     console.log("start");
     gameBoardClicksDisabled = false;
-    //document.getElementById("status").innerHTML = "Status: started";
+    gameStatus.gameOn = true;
+    updateGameStatus();
+    //document.getElementById("gameOn").style.visibility = "visible";
   }
 
   function reset() {
-    console.log("reset");    
+    console.log("reset");
     changeLevel();
     gameBoardClicksDisabled = true;
-    //document.getElementById("status").innerHTML = "Status: stopped";
+    gameStatus.gameOn = false;
+    updateGameStatus();
+    //document.getElementById("gameOn").style.visibility = "hidden";
   }
 
   function flipCard() {
@@ -109,7 +154,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (cards.every((card) => card.dataset.solved === "true")) {
+      gameStatus.gameOn = false;
+      updateGameStatus();
       setTimeout(() => alert("Congratulations! You won!"), 500);
     }
+  }
+
+  function updateGameStatus() {
+    //document.getElementById('pText').innerHTML
+
+    if (gameStatus.gameOn)
+      document.getElementById("gameOn").style.visibility = "visible";
+    else document.getElementById("gameOn").style.visibility = "hidden";
+
+    document.getElementById(
+      "numOfCardPairsDone"
+    ).innerHTML = `Number of card pairs done: ${gameStatus.numOfCardPairsDone}`;
+
+    document.getElementById(
+      "secondsRemaining"
+    ).innerHTML = `Seconds remaining: ${gameStatus.secondsRemaining}`;
   }
 });
