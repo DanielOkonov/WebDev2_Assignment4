@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   changeLevel();
 
   function changeLevel() {
-    //if (gameBoardClicksDisabled) return;
+    if (gameStatus.gameOn) return;
 
     const level = document.querySelector('input[name="level"]:checked').value;
     console.log("level: " + level);
@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
     gameBoardClicksDisabled = false;
     gameStatus.gameOn = true;
     updateGameStatus();
-    //document.getElementById("gameOn").style.visibility = "visible";
   }
 
   function reset() {
@@ -123,7 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
     gameBoardClicksDisabled = true;
     gameStatus.gameOn = false;
     updateGameStatus();
-    //document.getElementById("gameOn").style.visibility = "hidden";
   }
 
   function flipCard() {
@@ -161,11 +159,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateGameStatus() {
-    //document.getElementById('pText').innerHTML
-
-    if (gameStatus.gameOn)
+    if (gameStatus.gameOn) {
       document.getElementById("gameOn").style.visibility = "visible";
-    else document.getElementById("gameOn").style.visibility = "hidden";
+      document.getElementsByName('level').forEach(l => l.disabled = true);
+    } else {
+      document.getElementById("gameOn").style.visibility = "hidden";
+      document.getElementsByName('level').forEach(l => l.disabled = false);
+    }
 
     document.getElementById(
       "numOfCardPairsDone"
