@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const gameStatus = {
     gameOn: false,
     numOfCardPairsDone: 0,
+    numOfCllcks: 0,
     secondsRemaining: 0,
   };
 
@@ -36,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
   levelSelect.addEventListener("change", changeLevel);
   document.getElementById("start").addEventListener("click", start);
   document.getElementById("reset").addEventListener("click", reset);
+
+  setInterval(decrementSeconds, 1000);
 
   changeLevel();
 
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     gameStatus.gameOn = false;
     gameStatus.numOfCardPairsDone = 0;
+    gameStatus.numOfCllcks = 0;
     gameStatus.secondsRemaining = gameLevelDetails.secondsToDoAll;
 
     updateGameStatus();
@@ -117,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("start");
     gameBoardClicksDisabled = false;
     gameStatus.gameOn = true;
-    updateGameStatus();
+    updateGameStatus();    
   }
 
   function reset() {
@@ -125,11 +129,14 @@ document.addEventListener("DOMContentLoaded", function () {
     changeLevel();
     gameBoardClicksDisabled = true;
     gameStatus.gameOn = false;
+    gameStatus.secondsRemaining = gameLevelDetails.secondsToDoAll;
     updateGameStatus();
   }
 
   function flipCard() {
     if (gameBoardClicksDisabled) return;
+
+    gameStatus.numOfCllcks++;
 
     this.classList.add("flip-card-flipped");
 
@@ -152,14 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
         flippedCards[0].dataset.solved = "true";
         flippedCards[1].dataset.solved = "true";
         flippedCards = [];
+        gameStatus.numOfCardPairsDone++;
       }
     }
 
     if (cards.every((card) => card.dataset.solved === "true")) {
-      gameStatus.gameOn = false;
-      updateGameStatus();
+      gameStatus.gameOn = false;      
       setTimeout(() => alert("Congratulations! You won!"), 500);
     }
+
+    updateGameStatus();
   }
 
   function updateGameStatus() {
@@ -176,7 +185,27 @@ document.addEventListener("DOMContentLoaded", function () {
     ).innerHTML = `Number of card pairs done: ${gameStatus.numOfCardPairsDone}`;
 
     document.getElementById(
+      "numOfCllcks"
+    ).innerHTML = `Number of card pairs done: ${gameStatus.numOfCllcks}`;
+
+    document.getElementById(
       "secondsRemaining"
     ).innerHTML = `Seconds remaining: ${gameStatus.secondsRemaining}`;
   }
+
+  function decrementSeconds(){
+    if(!gameStatus.gameOn) return;
+
+    gameStatus.secondsRemaining--;
+
+    document.getElementById(
+      "secondsRemaining"
+    ).innerHTML = `Seconds remaining: ${gameStatus.secondsRemaining}`;
+
+    if (gameStatus.secondsRemaining === 0) {
+      gameStatus.gameOn = false;      
+      setTimeout(() => alert("Sorry, You lost"), 500);
+    }
+  }
+
 });
