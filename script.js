@@ -185,8 +185,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ).innerHTML = `Number of card pairs done: ${gameStatus.numOfCardPairsDone}`;
 
     document.getElementById(
+      "numOfCardPairsToDo"
+    ).innerHTML = `Number of card pairs to do: ${gameLevelDetails.numOfCardPairs - gameStatus.numOfCardPairsDone}`;
+
+    document.getElementById(
       "numOfCllcks"
-    ).innerHTML = `Number of card pairs done: ${gameStatus.numOfCllcks}`;
+    ).innerHTML = `Number of clicks: ${gameStatus.numOfCllcks}`;
 
     document.getElementById(
       "secondsRemaining"
