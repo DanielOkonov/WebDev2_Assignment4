@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   const gameBoard = document.getElementById("game-board");
-  const levelSelect = document.getElementById("level");
 
-  levelSelect.addEventListener("change", changeLevel);
+  document.getElementById("level").addEventListener("change", changeLevel);
+  document.getElementById("theme").addEventListener("change", changeTheme);
   document.getElementById("start").addEventListener("click", start);
   document.getElementById("reset").addEventListener("click", reset);
 
@@ -114,6 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
       card.addEventListener("click", flipCard);
       gameBoard.appendChild(card);
       cards.push(card);
+    }
+  }
+
+  function changeTheme() {  
+    const theme = document.querySelector('input[name="theme"]:checked').value;
+
+    if(theme === 'dark'){
+      document.body.classList.add('dark');
+    }else {
+      document.body.classList.remove('dark');
     }
   }
 
