@@ -22,12 +22,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const gameLevelDetails = {
     numOfCardPairs: 0,
     numOfColumns: 0,
+    numOfPowerUps: 0,
     secondsToDoAll: 0,
   };
   const gameStatus = {
     gameOn: false,
     numOfCardPairsDone: 0,
     numOfCllcks: 0,
+    numOfRemainingPowerUps: 0,
     secondsRemaining: 0,
   };
 
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("level").addEventListener("change", changeLevel);
   document.getElementById("theme").addEventListener("change", changeTheme);
   document.getElementById("start").addEventListener("click", start);
+  document.getElementById("powerup").addEventListener("click", powerUp);
   document.getElementById("reset").addEventListener("click", reset);
 
   setInterval(decrementSeconds, 1000);
@@ -52,16 +55,19 @@ document.addEventListener("DOMContentLoaded", function () {
       case "easy":
         gameLevelDetails.numOfCardPairs = 3;
         gameLevelDetails.numOfColumns = 3;
+        gameLevelDetails.numOfPowerUps = 1,
         gameLevelDetails.secondsToDoAll = 30;
         break;
       case "medium":
         gameLevelDetails.numOfCardPairs = 4;
         gameLevelDetails.numOfColumns = 4;
+        gameLevelDetails.numOfPowerUps = 2,
         gameLevelDetails.secondsToDoAll = 60;
         break;
       case "hard":
         gameLevelDetails.numOfCardPairs = 6;
         gameLevelDetails.numOfColumns = 4;
+        gameLevelDetails.numOfPowerUps = 3,
         gameLevelDetails.secondsToDoAll = 90;
         break;
       default:
@@ -78,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     gameStatus.gameOn = false;
     gameStatus.numOfCardPairsDone = 0;
     gameStatus.numOfCllcks = 0;
+    gameStatus.numOfRemainingPowerUps = gameLevelDetails.numOfPowerUps;
     gameStatus.secondsRemaining = gameLevelDetails.secondsToDoAll;
 
     updateGameStatus();
@@ -128,14 +135,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function start() {
-    console.log("start");
     gameBoardClicksDisabled = false;
     gameStatus.gameOn = true;
     updateGameStatus();    
   }
 
-  function reset() {
-    console.log("reset");
+  function powerUp() {    
+    if (!gameStatus.gameOn) return;  
+    if(gameStatus.numOfRemainingPowerUps === 0) return;  
+    gameBoardClicksDisabled = true;
+
+    cards.filter(c => c.dataset.solved !== 'true').forEach(c => {
+      c.classList.add("flip-card-flipped");
+      setTimeout(() => {
+        c.classList.remove("flip-card-flipped");
+      }, 1000);
+    });
+
+    gameStatus.numOfRemainingPowerUps--;
+    updateGameStatus();    
+    gameBoardClicksDisabled = false;
+  }
+
+  function reset() {    
     changeLevel();
     gameBoardClicksDisabled = true;
     gameStatus.gameOn = false;
@@ -201,6 +223,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById(
       "numOfCllcks"
     ).innerHTML = `Number of clicks: ${gameStatus.numOfCllcks}`;
+
+    document.getElementById(
+      "numOfRemainingPowerUps"
+    ).innerHTML = `Number of remaining Power Ups: ${gameStatus.numOfRemainingPowerUps}`;
 
     document.getElementById(
       "secondsRemaining"
